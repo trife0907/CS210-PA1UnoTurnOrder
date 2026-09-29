@@ -87,6 +87,16 @@ public:
         }
         --size_;
     }
+    void reverse() override {
+        // Check if list is empty or size == 1
+        if (size_ <= 1) return;
+        // Reverse
+        for (int i = 0, j = size_ - 1; i < size_ / 2; i++, j--) {
+            T* temp = data_[i];
+            data_[i] = data_[j];
+            data_[j] = temp;
+        }
+    }
 
     ~ArrayList() override {
         for (int i = 0; i < size_; ++i) {

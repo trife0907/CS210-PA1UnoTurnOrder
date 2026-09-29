@@ -106,6 +106,21 @@ public:
         size_--;
     }
 
+    void reverse() override {
+        // Check if list is empty or size == 1
+        if (size_ <= 1) return;
+        // Reverse
+        Node<T>* prev = nullptr;
+        Node<T>* current = head_;
+        while (current != nullptr) {
+            Node<T>* next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
+        }
+        head_ = prev; // Don't forget to reassign head pointer to the new front of list
+    }
+
     ~LinkedList() override {
         while (head_ != nullptr) {
             Node<T>* doomed = head_;
