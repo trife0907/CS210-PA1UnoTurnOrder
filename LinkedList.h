@@ -51,7 +51,7 @@ public:
     void addAnywhere(int position, T* value) override {
         // Check if position is out of bounds
         if (position < 0) {
-            std::cout << "Not a valid position." << std::endl;
+            std::cout << "Position must be >= 0." << std::endl;
             return;
         }
         Node<T>* fresh = new Node<T>(value);
