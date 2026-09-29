@@ -69,6 +69,25 @@ public:
         ++size_;
     }
 
+    void deleteAnywhere(int position) override {
+        // Check for empty list
+        if (size_ == 0) {
+            std::cout << "ArrayList is empty." << std::endl;
+            return;
+        }
+        // Check if position is out of bounds
+        if (position < 0 || position > size_ - 1) {
+            std::cout << "Position out of range." << std::endl;
+            return;
+        }
+        // Deletion and shift
+        delete data_[position];
+        for (int i = position; i < size_ - 1; i++) {
+            data_[i] = data_[i + 1];
+        }
+        --size_;
+    }
+
     ~ArrayList() override {
         for (int i = 0; i < size_; ++i) {
             delete data_[i];

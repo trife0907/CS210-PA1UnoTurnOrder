@@ -11,12 +11,13 @@
 template <typename T>
 class LinkedList : public List<T> {
 public:
-    LinkedList() : head_(nullptr) {}
+    LinkedList() : head_(nullptr), size_(0) {}
 
     void addFront(T* value) override {
         Node<T>* fresh = new Node<T>(value);
         fresh->next = head_;
         head_ = fresh;
+        size_++;
     }
 
     void deleteFront() override {
@@ -28,6 +29,7 @@ public:
         head_ = head_->next;
         delete doomed->data;
         delete doomed;
+        size_--;
     }
 
     bool search(T* value) const override {
@@ -50,26 +52,58 @@ public:
 
     void addAnywhere(int position, T* value) override {
         // Check if position is out of bounds
-        if (position < 0) {
-            std::cout << "Position must be >= 0." << std::endl;
+        if (position < 0 || position > size_) {
+            std::cout << "Position out of range." << std::endl;
             return;
         }
         Node<T>* fresh = new Node<T>(value);
         Node<T>* current = head_;
         // Check if LinkedList is empty or if position == 0, then add to front
-        if (head_ == nullptr || position == 0) {
+        if (size_ == 0 || position == 0) {
             fresh->next = head_;
             head_ = fresh;
+            size_++;
             return;
         }
         // Insertion for position > 0
         for (int i = 0; i < position - 1; i++) {
-            // Account for position > size, stops the loop before going too far down the list
-            if (current->next == nullptr) break;
             current = current->next;
         }
         fresh->next = current->next;
         current->next = fresh;
+        size_++;
+    }
+
+    void deleteAnywhere(int position) override {
+        // Check for empty list
+        if (size_ == 0) {
+            std::cout << "LinkedList is empty." << std::endl;
+            return;
+        }
+        // Check if position is out of bounds
+        if (position < 0 || position > size_ - 1) {
+            std::cout << "Position out of range." << std::endl;
+            return;
+        }
+        // Check if size == 1 or position == 0, then delete from front
+        if (size_ == 1 || position == 0) {
+            Node<T>* doomed = head_;
+            head_ = head_->next;
+            delete doomed->data;
+            delete doomed;
+            size_--;
+            return;
+        }
+        // Deletion for position > 0
+        Node<T>* current = head_;
+        for (int i = 0; i < position - 1; i++) {
+            current = current->next;
+        }
+        Node<T>* doomed = current->next;
+        current->next = doomed->next;
+        delete doomed->data;
+        delete doomed;
+        size_--;
     }
 
     ~LinkedList() override {
@@ -83,4 +117,5 @@ public:
 
 private:
     Node<T>* head_;
+    int size_;
 };
