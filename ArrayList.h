@@ -98,6 +98,27 @@ public:
         }
     }
 
+    void concat(List<T>* other) override {
+        ArrayList<T>* otherList = dynamic_cast<ArrayList<T>*>(other);
+        // Check if other is not an ArrayList
+        if (otherList == nullptr) {
+            std::cout << "Not an ArrayList." << std::endl;
+            return;
+        }
+        // Check if not enough capacity
+        if (this->size_ + otherList->size_ > CAPACITY) {
+            std::cout << "Not enough capacity." << std::endl;
+            return;
+        }
+        // Concat
+        for (int i = 0; i < otherList->size_; ++i) {
+            this->data_[this->size_ + i] = otherList->data_[i];
+            otherList->data_[i] = nullptr; // Transfer ownership by removing other pointer
+            ++this->size_;
+        }
+        otherList->size_ = 0;
+    }
+
     ~ArrayList() override {
         for (int i = 0; i < size_; ++i) {
             delete data_[i];

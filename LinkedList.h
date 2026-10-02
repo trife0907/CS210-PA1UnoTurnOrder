@@ -121,6 +121,33 @@ public:
         head_ = prev; // Don't forget to reassign head pointer to the new front of list
     }
 
+    void concat(List<T>* other) override {
+        LinkedList<T>* otherList = dynamic_cast<LinkedList<T>*>(other);
+        // Check if other is not an LinkedList
+        if (otherList == nullptr) {
+            std::cout << "Not a LinkedList." << std::endl;
+            return;
+        }
+        // Check if other list is empty
+        if (otherList->head_ == nullptr) {
+            std::cout << "Other LinkedList is empty." << std::endl;
+            return;
+        }
+        // Check if current list is empty, then concat
+        if (this->head_ == nullptr) {
+            head_ = otherList->head_;
+        } else { // Regular concat
+            Node<T>* current = this->head_;
+            while (current->next != nullptr) {
+                current = current->next;
+            }
+            current->next = otherList->head_; // Connect end of list to head of OtherList
+        }
+        this->size_ += otherList->size_;
+        otherList->head_ = nullptr; // Transfer ownership, remove other pointer
+        otherList->size_ = 0;
+    }
+
     ~LinkedList() override {
         while (head_ != nullptr) {
             Node<T>* doomed = head_;
