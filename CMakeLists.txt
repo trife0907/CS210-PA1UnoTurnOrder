@@ -3,9 +3,11 @@ project(PA1UnoTurnOrder)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(PA1UnoTurnOrder main.cpp
+add_executable(PA1UnoTurnOrder
         Node.h
         ArrayList.h
         LinkedList.h
         List.h
-        Player.h)
+        Player.h
+        main.cpp
+)

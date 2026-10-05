@@ -114,8 +114,8 @@ public:
         for (int i = 0; i < otherList->size_; ++i) {
             this->data_[this->size_ + i] = otherList->data_[i];
             otherList->data_[i] = nullptr; // Transfer ownership by removing other pointer
-            ++this->size_;
         }
+        this->size_ += otherList->size_;
         otherList->size_ = 0;
     }
 
