@@ -1,7 +1,6 @@
 #include <iostream>
 #include "List.h"
 #include "Player.h"
-#include "Card.h"
 
 int main() {
     // ---- Part 1: required test harness, do not modify ----
