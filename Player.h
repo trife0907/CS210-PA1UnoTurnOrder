@@ -1,6 +1,8 @@
 #pragma once
 #include <ostream>
 #include <string>
+#include "Card.h"
+#include "Stack.h"
 
 class Player {
 public:
@@ -15,7 +17,21 @@ public:
         return out << p.id_ << " " << p.name_;
     }
 
+    // Card functions
+    void giveCard(Card* card) {
+        hand_.push(card);
+    }
+
+    Card* playCard() {
+        return hand_.pop();
+    }
+
+    void printHand() const {
+        hand_.print();
+    }
+
 private:
     int id_;
     std::string name_;
+    Stack<Card> hand_;
 };

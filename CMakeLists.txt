@@ -10,4 +10,6 @@ add_executable(PA1UnoTurnOrder
         List.h
         Player.h
         main.cpp
+        Card.h
+        Stack.h
 )
